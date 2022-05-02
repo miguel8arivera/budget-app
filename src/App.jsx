@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ListExpense from "./components/ListExpense";
 import Modal from "./components/Modal";
@@ -11,9 +11,21 @@ function App() {
   const [modal, setModal] = useState(false);
   const [animationModal, setAnimationModal] = useState(false);
   const [expenses, setExpenses] = useState([]);
+  const [expentEdit, setExpentEdit] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(expentEdit).length > 0) {
+      setModal(true);
+
+      setTimeout(() => {
+        setAnimationModal(true);
+      }, 500);
+    }
+  }, [expentEdit]);
 
   const handleNewSpent = () => {
     setModal(true);
+    setExpentEdit({});
 
     setTimeout(() => {
       setAnimationModal(true);
@@ -42,7 +54,7 @@ function App() {
       {validBudget && (
         <>
           <main>
-            <ListExpense expenses={expenses} />
+            <ListExpense expenses={expenses} setExpentEdit={setExpentEdit} />
           </main>
           <div className="nuevo-gasto">
             <img
@@ -59,6 +71,7 @@ function App() {
           animationModal={animationModal}
           setAnimationModal={setAnimationModal}
           saveExpense={saveExpense}
+          expentEdit={expentEdit}
         />
       )}
     </div>

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 const ControlBudget = ({ budget, expenses }) => {
-  const [spent, setSpent] = useState(10);
+  const [spent, setSpent] = useState(0);
+  const [available, setAvailable] = useState(0);
+
   useEffect(() => {
     const totalSpent = expenses.reduce((acc, curr) => curr.amount + acc, 0);
+    const totalAvailable = budget - totalSpent;
+    setAvailable(totalAvailable);
     setSpent(totalSpent);
   }, [expenses]);
 
@@ -26,7 +30,7 @@ const ControlBudget = ({ budget, expenses }) => {
           <span>Spent:</span> {formatQuatity(spent)}
         </p>
         <p>
-          <span>Available:</span> {formatQuatity(0)}
+          <span>Available:</span> {formatQuatity(available)}
         </p>
       </div>
     </div>

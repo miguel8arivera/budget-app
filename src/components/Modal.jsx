@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CloseBtn from "../img/cerrar.svg";
 import Message from "./message";
 
@@ -7,11 +7,20 @@ const Modal = ({
   animationModal,
   setAnimationModal,
   saveExpense,
+  expentEdit,
 }) => {
   const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    if (Object.keys(expentEdit).length > 0) {
+      setName(expentEdit.name);
+      setAmount(expentEdit.amount);
+      setCategory(expentEdit.category);
+    }
+  }, []);
   const handleBtnClose = () => {
     setAnimationModal(false);
     setTimeout(() => {
